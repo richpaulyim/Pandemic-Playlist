@@ -1,0 +1,156 @@
+---
+title: "Project"
+author: "Chris Lee"
+date: "3/1/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+data <- read.csv('spotifyChartsCOVIDUSA.csv')
+```
+
+
+```{r}
+# danceability
+# Hypothesis testing
+#H0:mean(before) = mean(after)
+#Ha:mean(before) != mean(after)
+hist(data$danceability)
+hist(data$danceability[data$label == "before"])
+hist(data$danceability[data$label == "after"])
+#danceability appears to be not normal
+wilcox.test(data$danceability[data$label == "before"], data$danceability[data$label == "after"], alternative = "two.sided")
+#Since the p value is 0.00168 which is less than 0.05, so the difference between before and after COVID in danceability is statistically significant.
+```
+```{r}
+hist(data$energy)
+hist(data$energy[data$label == "before"])
+hist(data$energy[data$label == "after"])
+#energy appears to be not normal
+#H0:mean(before) = mean(after)
+#Ha:mean(before) != mean(after)
+wilcox.test(data$energy[data$label == "before"], data$energy[data$label == "after"], alternative = "two.sided")
+#Since the p value is 0.003335 which is less than 0.05, so the difference between before and after COVID in energy is statistically significant.
+```
+
+```{r}
+hist(data$loudness)
+hist(data$loudness[data$label == "before"])
+hist(data$loudness[data$label == "after"])
+# loudness is definitely not normal
+#H0:mean(before) = mean(after)
+#Ha:mean(before) != mean(after)
+wilcox.test(data$loudness[data$label == "before"], data$loudness[data$label == "after"], alternative = "two.sided")
+#Since the p value is 0.3407 which is greater than 0.05, so the difference between before and after COVID in loudness is not statistically significant.
+```
+```{r}
+# speechiness
+# Hypothesis testing
+#H0:mean(before) = mean(after)
+#Ha:mean(before) != mean(after)
+hist(data$speechiness)
+hist(data$speechiness[data$label == "before"])
+hist(data$speechiness[data$label == "after"])
+#speechiness appears to be not normal
+wilcox.test(data$speechiness[data$label == "before"], data$speechiness[data$label == "after"], alternative = "two.sided")
+#Since the p value is almost 0 which is less than 0.05, so the difference between before and after COVID in speechiness is statistically significant.
+```
+
+```{r}
+# acousticness
+# Hypothesis testing
+#H0:mean(before) = mean(after)
+#Ha:mean(before) != mean(after)
+hist(data$acousticness)
+hist(data$acousticness[data$label == "before"])
+hist(data$acousticness[data$label == "after"])
+#acousticness appears to be not normal
+wilcox.test(data$acousticness[data$label == "before"], data$acousticness[data$label == "after"], alternative = "two.sided")
+# #Since the p value is 0.1952 which is greater than 0.05, so the difference between before and after COVID in acousticness is not statistically significant.
+```
+
+```{r}
+#instrumentalness
+# Hypothesis testing
+#H0:mean(before) = mean(after)
+#Ha:mean(before) != mean(after)
+hist(log(data$instrumentalness))
+hist(log(data$instrumentalness[data$label == "before"]))
+hist(log(data$instrumentalness[data$label == "after"]))
+#instrumentalness appears to be not normal
+wilcox.test(log(data$instrumentalness[data$label == "before"]), log(data$instrumentalness[data$label == "after"]), alternative = "two.sided")
+# #Since the p value is 0.1532 which is greater than 0.05, so the difference between before and after COVID in instrumentalness is not statistically significant.
+```
+
+```{r}
+#liveness
+# Hypothesis testing
+#H0:mean(before) = mean(after)
+#Ha:mean(before) != mean(after)
+hist(data$liveness)
+hist(data$liveness[data$label == "before"])
+hist(data$liveness[data$label == "after"])
+#liveness appears to be not normal
+wilcox.test(data$liveness[data$label == "before"], data$liveness[data$label == "after"], alternative = "two.sided")
+#Since the p value is 0.8063 which is greater than 0.05, so the difference between before and after COVID liveness is not statistically significant.
+```
+```{r}
+#valence
+# Hypothesis testing
+#H0:mean(before) = mean(after)
+#Ha:mean(before) != mean(after)
+hist(data$valence)
+hist(data$valence[data$label == "before"])
+hist(data$valence[data$label == "after"])
+#valence appears to be not normal
+wilcox.test(data$valence[data$label == "before"], data$valence[data$label == "after"], alternative = "two.sided")
+# Since the p value is 0.01068 which is less than 0.05, so the difference between before and after COVID in valence is statistically significant.
+```
+```{r}
+#tempo
+# Hypothesis testing
+#H0:mean(before) = mean(after)
+#Ha:mean(before) != mean(after)
+hist(data$tempo)
+hist(data$tempo[data$label == "before"])
+hist(data$tempo[data$label == "after"])
+#tempo appears to be not normal
+wilcox.test(data$tempo[data$label == "before"], data$tempo[data$label == "after"], alternative = "two.sided")
+# Since the p value is 0.2413 which is greater than 0.05, so the difference between before and after COVID in tempo is not statistically significant.
+```
+
+
+```{r}
+#duration_ms
+# Hypothesis testing
+#H0:mean(before) = mean(after)
+#Ha:mean(before) != mean(after)
+hist(data$duration_ms)
+hist(data$duration_ms[data$label == "before"])
+hist(data$duration_ms[data$label == "after"])
+#duration_ms appears to be normal
+t.test(data$duration_ms[data$label == "before"], data$duration_ms[data$label == "after"], alternative = "two.sided")
+# Since the p value is 0.178 which is greater than 0.05, so the difference between before and after COVID in duration_ms is not statistically significant.
+```
+```{r}
+#mode 
+# Hypothesis testing
+#H0:mean(before) = mean(after)
+#Ha:mean(before) != mean(after)
+hist(data$mode)
+hist(data$mode[data$label == "before"])
+hist(data$mode[data$label == "after"])
+#find out how many before and after
+n.before <- length(data$label[data$label == "before"])
+n.after <- length(data$label[data$label == "after"])
+#find out how many mode == 1 in before and after
+n.mode1.before <- length(data$mode[data$mode == 1 & data$label == "before"])
+n.mode1.after <- length(data$mode[data$mode == 1 & data$label == "after"])
+prop.test(x = c(n.mode1.before, n.mode1.after), n = c(n.before, n.after))
+# Since the p value is 0.08125 which is greater than 0.05, so the difference between before and after COVID in mode is not statistically significant.
+```
+
